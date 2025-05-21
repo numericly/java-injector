@@ -4,6 +4,11 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.Thread;
 
 public class Run {
 
@@ -14,11 +19,22 @@ public class Run {
      */
     public static void run(String path) {
         System.out.println("Loading...");
+        File file = new  File("C:\\Users\\willi\\Desktop\\balls.txt");
+
         try {
-            loadJar(path);
-            System.out.println("JAR loaded.");
-        } catch (Exception exception) {
-            exception.printStackTrace(); // JAR load failed.
+            // file.createNewFile();
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+            Thread currentThread = Thread.currentThread();
+
+            // Get the name of the current thread
+            String threadName = currentThread.getName();
+            bw.write(threadName);
+
+            // Close connection
+            bw.close();
+        } catch(Exception e) {
+            System.out.println(e.toString());
         }
     }
 
@@ -28,6 +44,7 @@ public class Run {
      * @param dir Directory to find run.jar
      */
     private static void loadJar(String dir) throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        /*
         System.out.println("Fetching JAR file (from " + dir + ")...");
         File file = new File(dir, "run.jar");
         JarFile jar = new JarFile(file);
@@ -45,5 +62,6 @@ public class Run {
             System.out.println("Running main method...");
             clazz.getMethod("main").invoke(null); // Run static void function called "main"
         }
+        */
     }
 }

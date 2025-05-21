@@ -33,18 +33,6 @@ bool inject(DWORD pid, const char* dll_path)
     return false;
 }
 
-/**
-* Compile lib/Run.java -> lib/Run.class with javac
-* 
-* @param dir Program dir
-*/
-void try_compile_run(std::string dir) {
-    std::string path = dir + "\\lib\\Run.java";
-    std::string cmd = "javac " + path;
-    system(cmd.c_str());
-}
-
-
 int main(int argc, char* argv[])
 {
     PROCESSENTRY32 entry;
@@ -60,9 +48,6 @@ int main(int argc, char* argv[])
             // Found JVM process
             if (_wcsicmp(entry.szExeFile, L"javaw.exe") == 0)
             {
-                // Try compile Run.java -> Run.class
-                try_compile_run(dir);
-                // Make full path to lib.dll (based on run path)
                 std::string full_path;
                 (full_path += dir) += "\\lib.dll";
                 // Inject DLL into JVM process ID
